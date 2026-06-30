@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>TrainingHQ</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  :root{
+    --surface-0:#f4f5f7; --surface-1:#ffffff; --surface-2:#ffffff;
+    --border:#e5e7eb; --border-strong:#d1d5db; --border-accent:#3B82F6;
+    --border-success:#86efac; --border-danger:#fca5a5; --border-warning:#fcd34d;
+    --text-primary:#111827; --text-secondary:#374151; --text-muted:#6b7280;
+    --text-accent:#2563eb; --text-success:#16a34a; --text-danger:#dc2626;
+    --text-warning:#b45309; --text-pro:#7c3aed;
+    --bg-accent:#eff6ff; --bg-success:#f0fdf4; --bg-danger:#fef2f2;
+    --bg-warning:#fffbeb; --bg-pro:#f5f3ff;
+    --fill-accent:#2563eb; --fill-accent-hover:#1d4ed8; --fill-danger:#dc2626;
+    --on-accent:#ffffff;
+  }
+  body{margin:0;background:var(--surface-0);padding:0;min-height:100vh}
+</style>
+</head>
+<body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  #thq{font-family:'Barlow',system-ui,sans-serif;font-size:15px;line-height:1.5;color:var(--text-primary);max-width:480px;margin:0 auto;position:relative;background:var(--surface-0);min-height:100vh}
+  .hdr{background:var(--surface-1);border-bottom:.5px solid var(--border);padding:11px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+  .logo{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;letter-spacing:.03em;color:var(--text-accent)}
+  .hicon{background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:19px;padding:6px;border-radius:7px;display:flex}
+  .hicon:hover{background:var(--surface-0)}
+  .pg{padding:0 0 40px}
+  .wiz-hdr{padding:14px 16px 0;display:flex;align-items:center}
+  .wiz-step{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;border:.5px solid var(--border);color:var(--text-muted);background:var(--surface-1);flex-shrink:0}
+  .wiz-step.on{background:var(--fill-accent);border-color:var(--fill-accent);color:var(--on-accent)}
+  .wiz-step.done{background:var(--bg-success);border-color:var(--border-success);color:var(--text-success)}
+  .wiz-line{flex:1;height:.5px;background:var(--border)}
+  .wiz-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--text-primary);padding:10px 16px 2px}
+  .wiz-sub{font-size:13px;color:var(--text-muted);padding:0 16px 12px}
+  .sh{padding:12px 16px 6px;display:flex;align-items:center;justify-content:space-between}
+  .st{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+  .ghost{background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:13px;font-family:'Barlow',sans-serif;font-weight:500;display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px}
+  .ghost:hover{background:var(--surface-1)}
+  .pri{background:var(--fill-accent);color:var(--on-accent);border:none;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;padding:10px 18px;border-radius:8px;display:flex;align-items:center;gap:6px;white-space:nowrap}
+  .pri:hover{background:var(--fill-accent-hover)}
+  .team-sel-card{margin:0 16px 10px;border:.5px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;background:var(--surface-1)}
+  .team-sel-card.chosen{border:2px solid var(--border-accent);background:var(--bg-accent)}
+  .team-avatar{width:42px;height:42px;border-radius:10px;background:var(--bg-accent);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text-accent);flex-shrink:0}
+  .team-sel-card.chosen .team-avatar{background:var(--surface-1)}
+  .team-name{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--text-primary)}
+  .team-sub{font-size:12px;color:var(--text-muted)}
+  .check-circle{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border-strong);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
+  .check-circle.on{background:var(--fill-accent);border-color:var(--fill-accent);color:var(--on-accent)}
+  .new-team-row{margin:0 16px 10px;padding:14px 16px;border:1px dashed var(--border-strong);border-radius:12px;display:flex;align-items:center;gap:10px;cursor:pointer;color:var(--text-muted)}
+  .new-team-row:hover{background:var(--surface-1);color:var(--text-primary)}
+  .team-body{padding:0 16px 14px}
+  .player-row{display:flex;align-items:center;padding:8px 0;border-bottom:.5px solid var(--border);gap:10px}
+  .player-row:last-child{border-bottom:none}
+  .player-num{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--text-muted);min-width:16px}
+  .player-name{flex:1;font-size:14px;font-weight:500;color:var(--text-primary)}
+  .player-rm{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:14px;display:flex;padding:2px}
+  .p-add-row{display:flex;gap:6px;margin-top:10px}
+  .p-inp{flex:1;padding:8px 11px;border:.5px solid var(--border-strong);border-radius:7px;background:var(--surface-0);color:var(--text-primary);font-family:'Barlow',sans-serif;font-size:14px;outline:none}
+  .p-add-btn{padding:8px 14px;background:var(--fill-accent);color:var(--on-accent);border:none;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+  .form-field{margin:0 16px 12px;display:flex;flex-direction:column;gap:5px}
+  .form-label{font-size:12px;font-weight:600;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase}
+  .form-inp{padding:11px 13px;border:.5px solid var(--border-strong);border-radius:9px;background:var(--surface-1);color:var(--text-primary);font-family:'Barlow',sans-serif;font-size:15px;outline:none;width:100%}
+  .form-inp:focus{border-color:var(--border-accent)}
+  .dur-big-ctrl{display:flex;align-items:center;gap:0;border:.5px solid var(--border-strong);border-radius:10px;overflow:hidden}
+  .dbc-btn{background:var(--surface-1);border:none;cursor:pointer;color:var(--text-primary);width:46px;height:46px;display:flex;align-items:center;justify-content:center;font-size:22px}
+  .dbc-btn:hover{background:var(--surface-0)}
+  .dbc-val{flex:1;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--text-primary);background:var(--surface-1);border-left:.5px solid var(--border);border-right:.5px solid var(--border);height:46px;display:flex;align-items:center;justify-content:center}
+  .wiz-footer{padding:14px 16px 0;display:flex;gap:8px}
+  .sec-btn{flex:1;padding:12px;background:none;border:.5px solid var(--border-strong);border-radius:9px;color:var(--text-secondary);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+  .sec-btn:hover{background:var(--surface-1)}
+  .pri-btn{flex:2;padding:12px;background:var(--fill-accent);border:none;border-radius:9px;color:var(--on-accent);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+  .pri-btn:hover{background:var(--fill-accent-hover)}
+  .pri-btn[disabled]{opacity:.4;cursor:default}
+  .picker{margin:0 16px 8px;border:.5px solid var(--border-strong);border-radius:10px;overflow:hidden;background:var(--surface-1)}
+  .picker-hdr{display:flex;align-items:center;padding:9px 14px;border-bottom:.5px solid var(--border);background:var(--surface-0);gap:6px}
+  .ph-lbl{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-primary);flex:1}
+  .pbk{background:none;border:none;cursor:pointer;color:var(--text-accent);font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;display:flex;align-items:center;gap:3px}
+  .pcl{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:18px;display:flex;align-items:center}
+  .cat-row{display:flex;align-items:center;padding:11px 14px;cursor:pointer;border-bottom:.5px solid var(--border);gap:10px}
+  .cat-row:last-child{border-bottom:none}
+  .cat-row:hover{background:var(--surface-0)}
+  .cdot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .drill-row{display:flex;align-items:flex-start;padding:10px 14px;border-bottom:.5px solid var(--border);gap:10px}
+  .drill-row:last-child{border-bottom:none}
+  .dadd{background:var(--fill-accent);border:none;border-radius:6px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;margin-top:2px;font-size:16px;color:var(--on-accent)}
+  .dadd.added{background:var(--bg-success);color:var(--text-success);cursor:default}
+  .top-add-btn{margin:0 16px 10px;padding:12px 16px;border:2px solid var(--border-accent);border-radius:10px;background:var(--bg-accent);cursor:pointer;color:var(--text-accent);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;width:calc(100% - 32px);display:flex;align-items:center;justify-content:center;gap:8px}
+  .top-add-btn:hover{background:var(--bg-accent)}
+  .import-row{margin:0 16px 10px;padding:10px 14px;border:.5px solid var(--border);border-radius:9px;background:var(--surface-1);cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text-secondary);font-size:13px;font-weight:500}
+  .import-row:hover{background:var(--surface-0)}
+  .blk-card{background:var(--surface-1);border:.5px solid var(--border);border-radius:10px;overflow:hidden;display:flex;margin:0 16px 6px}
+  .bc-bar{width:4px;flex-shrink:0}
+  .bc-body{flex:1;padding:10px 12px}
+  .bc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .bc-cat{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;white-space:nowrap}
+  .bc-dur{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:var(--text-secondary);white-space:nowrap}
+  .bc-name{font-weight:600;font-size:14px;color:var(--text-primary);margin-top:4px;line-height:1.3}
+  .bc-notes{font-size:12px;color:var(--text-muted);margin-top:2px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .bc-acts{display:flex;gap:2px;margin-top:6px}
+  .ico{background:none;border:none;cursor:pointer;color:var(--text-muted);padding:4px 6px;border-radius:6px;font-size:15px;display:flex;align-items:center}
+  .ico:hover{background:var(--surface-0);color:var(--text-secondary)}
+  .ou-bar{margin:0 16px 10px;padding:10px 14px;border-radius:9px;display:flex;align-items:center;justify-content:space-between}
+  .run-wrap{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+  .run-prog{display:flex;gap:3px}
+  .rseg{height:5px;border-radius:3px;flex:1;background:var(--border-strong)}
+  .rseg.done{background:var(--fill-accent)}.rseg.cur{background:var(--text-accent)}
+  .rblock{border:.5px solid var(--border);border-radius:12px;overflow:hidden}
+  .rbhdr{padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+  .rtimer{font-family:'Barlow Condensed',sans-serif;font-size:80px;font-weight:800;letter-spacing:-.02em;line-height:1;text-align:center;padding:4px 16px 2px}
+  .rname{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;padding:0 16px 4px;line-height:1.2;color:var(--text-primary)}
+  .rnotes{font-size:13px;color:var(--text-muted);padding:0 16px 12px;line-height:1.5}
+  .banner{padding:10px 14px;border-radius:9px;text-align:center}
+  .rcontrols{display:flex;justify-content:center;align-items:center;gap:8px}
+  .rcbtn{background:var(--surface-1);border:.5px solid var(--border);border-radius:50%;width:46px;height:46px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;color:var(--text-secondary)}
+  .rcbtn.lg{width:60px;height:60px;font-size:22px}
+  .rcbtn.accent{background:var(--fill-accent);border-color:var(--fill-accent);color:var(--on-accent)}
+  .clocks-card{background:var(--surface-1);border:.5px solid var(--border);border-radius:10px;padding:12px 16px;display:flex}
+  .ccol{flex:1;display:flex;flex-direction:column}
+  .ccol+.ccol{border-left:.5px solid var(--border);padding-left:16px}
+  .clock-lbl{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px}
+  .clock-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;line-height:1}
+  .clock-sub{font-size:11px;font-weight:600;margin-top:3px}
+  .rnext-card{background:var(--surface-1);border:.5px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px}
+  .pvlist{display:flex;flex-direction:column;gap:4px}
+  .pvrow{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:7px;background:var(--surface-1);border:.5px solid var(--border)}
+  .pvdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:20;display:flex;align-items:flex-start;justify-content:center;padding:60px 16px 32px;overflow-y:auto}
+  .ec{background:var(--surface-2);border:.5px solid var(--border);border-radius:12px;width:100%;max-width:480px;padding:20px;display:flex;flex-direction:column;gap:12px;max-height:82vh;overflow-y:auto}
+  .et{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--text-primary)}
+  .ef{display:flex;flex-direction:column;gap:6px}
+  .el{font-size:12px;font-weight:600;color:var(--text-muted);letter-spacing:.05em;text-transform:uppercase}
+  .ei{padding:9px 11px;border:.5px solid var(--border-strong);border-radius:8px;background:var(--surface-1);color:var(--text-primary);font-family:'Barlow',sans-serif;font-size:14px;outline:none;width:100%}
+  .ei:focus{border-color:var(--border-accent)}
+  .eta{padding:9px 11px;border:.5px solid var(--border-strong);border-radius:8px;background:var(--surface-1);color:var(--text-primary);font-family:'Barlow',sans-serif;font-size:14px;outline:none;width:100%;resize:vertical;min-height:70px}
+  .eacts{display:flex;gap:8px;margin-top:4px}
+  .esv{flex:1;padding:10px;background:var(--fill-accent);color:var(--on-accent);border:none;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;cursor:pointer}
+  .ecn{padding:10px 16px;background:none;border:.5px solid var(--border-strong);border-radius:8px;color:var(--text-secondary);font-family:'Barlow',sans-serif;font-size:14px;cursor:pointer}
+  .cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .copt{padding:7px;border:.5px solid var(--border);border-radius:7px;cursor:pointer;text-align:center;font-size:12px;font-weight:600;color:var(--text-secondary);background:var(--surface-1)}
+  .copt.sel{border-color:var(--border-accent);background:var(--bg-accent);color:var(--text-accent)}
+  .att-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+  .att-chip{padding:10px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:8px;border:.5px solid var(--border);background:var(--surface-1)}
+  .att-chip.present{background:var(--bg-success);border-color:var(--border-success)}
+  .att-chip.absent{background:var(--bg-danger);border-color:var(--border-danger)}
+  .att-name{font-size:13px;font-weight:600;flex:1}
+  .att-chip.present .att-name{color:var(--text-success)}
+  .att-chip.absent .att-name{color:var(--text-danger)}
+  .hist-card{background:var(--surface-1);border:.5px solid var(--border);border-radius:10px;padding:14px 16px;margin:0 16px 8px;cursor:pointer}
+  .hist-title{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--text-primary)}
+  .hist-meta{font-size:12px;color:var(--text-muted);margin-top:3px}
+  .hist-detail{margin-top:12px;padding-top:12px;border-top:.5px solid var(--border)}
+  .dr{display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;border-bottom:.5px solid var(--border);font-size:13px}
+  .dr:last-child{border-bottom:none}
+</style>
+
+<div id="thq">
+  <div class="hdr">
+    <i class="ti ti-ball-basketball" style="font-size:22px;color:var(--text-accent)" aria-hidden="true"></i>
+    <div><div class="logo">TrainingHQ</div><div style="font-size:11px;color:var(--text-muted)" id="hmeta">Plan a session</div></div>
+    <div style="margin-left:auto;display:flex;gap:2px" id="hact">
+      <button class="hicon" onclick="openDrillLibrary()" title="My drills"><i class="ti ti-notebook" aria-hidden="true"></i></button>
+      <button class="hicon" onclick="goScreen('hist')" title="History"><i class="ti ti-history" aria-hidden="true"></i></button>
+    </div>
+  </div>
+  <div class="pg" id="vroot"></div>
+  <div class="ov" id="ov" style="display:none"><div class="ec" id="ep"></div></div>
+</div>
+
+<script>
+const BC={warmup:{label:'Warm-up',color:'#F59E0B',bg:'var(--bg-warning)',text:'var(--text-warning)'},offence:{label:'Offence',color:'#EF4444',bg:'var(--bg-danger)',text:'var(--text-danger)'},defence:{label:'Defence',color:'#3B82F6',bg:'var(--bg-accent)',text:'var(--text-accent)'},transition:{label:'Transition',color:'#10B981',bg:'var(--bg-success)',text:'var(--text-success)'},cooldown:{label:'Cool-down',color:'#8B5CF6',bg:'var(--bg-pro)',text:'var(--text-pro)'},custom:{label:'Custom',color:'#9CA3AF',bg:'var(--surface-0)',text:'var(--text-secondary)'}};
+const DC=[{key:'warmup',label:'Warm-up',color:'#F59E0B',drills:[{name:'Team bonding share time',notes:'Siblings, pets – same and different, handshake'},{name:'Dribbling warm-up',notes:'Full court RH then LH, relaxed pace'},{name:'Stretching & footwork',notes:'Dynamic stretches, high knees, jump stops'},{name:'Ball handling warm-up',notes:'Figure 8s, around the world, dribble combos'}]},{key:'offence',label:'Offence',color:'#EF4444',drills:[{name:'Team shooting challenge',notes:'From 3-point line – fake, drive, score. Beat the score!'},{name:'Lay up lines',notes:'RH & LH lay ups, both sides of the court'},{name:'Dribbling full court',notes:'RH & LH crossovers, zig zag pattern full court'},{name:'Transition full court',notes:'Rebound → outlet → dribble to middle → wide outside'},{name:'Passing drill',notes:'Chest pass, bounce pass, overhead on the move'},{name:'Hero shots',notes:'Red line – 2 dribbles, 2 steps, shoot on the run'},{name:'3v2 fast break',notes:'Outlet pass, fill the lanes, finish in traffic'},{name:'Fake & first step drive',notes:'Jab step, sweep fake, big first step to the basket'}]},{key:'defence',label:'Defence',color:'#3B82F6',drills:[{name:'1v1 – BOB & belly up',notes:'BOB positioning and belly up defence stance'},{name:'Chase & face',notes:'Baseline to centre line, then 1v1 to stop basket'},{name:'Close the gap – crocodile snap',notes:'BOB position → step up and steal the ball'},{name:'Help defence rotation',notes:'Weak side awareness, help and recover drill'},{name:'Rebounding box out',notes:'Box out drill – find your player, secure the board'},{name:'Full court pressure',notes:'Press defence, deny the ball, force turnover'}]},{key:'transition',label:'Transition',color:'#10B981',drills:[{name:'End ball play – AWAY',notes:'Revisit the AWAY end ball inbounds play'},{name:'Side ball play – WATERFALL',notes:'Revisit WATERFALL side ball inbounds play'},{name:'2 up 2 down',notes:'Get the ball safely to the centre line'},{name:'Half-court offence',notes:'Spacing, movement, ball movement'},{name:'Zone offence',notes:'Attacking a 2-3 or 1-2-2 zone defence'}]},{key:'cooldown',label:'Cool-down',color:'#8B5CF6',drills:[{name:'Reflections & team chant',notes:'What did we learn? Team chant. Game details.'},{name:'Stretching cool-down',notes:'Static stretches, deep breathing, calm down'},{name:'Game preview talk',notes:'Talk through upcoming game plan and roles'}]}];
+
+let _id=5000;const uid=()=>++_id;
+const fmt=s=>{const a=Math.abs(Math.round(s));return`${String(Math.floor(a/60)).padStart(2,'0')}:${String(a%60).padStart(2,'0')}`;};
+const totalMins=()=>ses.blocks.reduce((s,b)=>s+b.dur,0);
+
+let ses={title:'Session #5',date:'21 May 2025',venue:'CLC',target:60,blocks:[]};
+let teams=[],selectedTeamId=null,expandedTeam=null,savedSessions=[],expandedHist=null,myDrills=[];
+let onbStep='team';
+let pickerState=null,editBlk=null,savePresence={},saveExtras={present:[],absent:[]};
+
+function loadData(){
+  try{const r1=localStorage.getItem('thq-sessions');if(r1)savedSessions=JSON.parse(r1);}catch(e){}
+  try{const r2=localStorage.getItem('thq-teams');if(r2)teams=JSON.parse(r2);if(!teams.length)seedDefaultTeam();}catch(e){seedDefaultTeam();}
+  try{const r3=localStorage.getItem('thq-sel-team');if(r3)selectedTeamId=parseInt(r3)||null;}catch(e){}
+  try{const r4=localStorage.getItem('thq-mydrills');if(r4)myDrills=JSON.parse(r4);}catch(e){myDrills=[];}
+  repairDuplicateIds();
+}
+function repairDuplicateIds(){
+  const seen=new Set();let changed=false;
+  teams.forEach(t=>{
+    if(seen.has(t.id)){ t.id=uid(); changed=true; }
+    seen.add(t.id);
+    const pseen=new Set();
+    t.players.forEach(p=>{ if(pseen.has(p.id)){ p.id=uid(); changed=true; } pseen.add(p.id); });
+  });
+  if(changed) persistTeams();
+}
+function persistDrills(){try{localStorage.setItem('thq-mydrills',JSON.stringify(myDrills));}catch(e){}}
+function seedDefaultTeam(){teams=[{id:301,name:'U14 Girls',division:'EDJBA Templestowe',players:[{id:311,name:'Giselle'},{id:312,name:'Ember'},{id:313,name:'Billie'},{id:314,name:'Kira'},{id:315,name:'Roya'},{id:316,name:'Pippa'},{id:317,name:'Ava'},{id:318,name:'Aria'},{id:319,name:'Zara'}]}];}
+function persistTeams(){try{localStorage.setItem('thq-teams',JSON.stringify(teams));localStorage.setItem('thq-sel-team',String(selectedTeamId||''));}catch(e){}}
+function persistSessions(){try{localStorage.setItem('thq-sessions',JSON.stringify(savedSessions));}catch(e){}}
+
+let screen='onboard';
+function rHdr(){
+  let label='Plan a session';
+  if(screen==='onboard'&&onbStep==='team')label="Who's training today?";
+  if(screen==='onboard'&&onbStep==='details')label='Session details';
+  if(screen==='build')label='Build the session';
+  if(screen==='run')label='Training now';
+  if(screen==='hist')label='Session history';
+  document.getElementById('hmeta').textContent=label;
+}
+function goScreen(s){screen=s;render();}
+
+function render(){
+  rHdr();
+  if(screen==='onboard') onbStep==='team'?rOnbTeam():rOnbDetails();
+  else if(screen==='build') rBuild();
+  else if(screen==='run') rRun();
+  else if(screen==='hist') rHist();
+}
+
+function rOnbTeam(){
+  const el=document.getElementById('vroot');
+  el.innerHTML=`
+    <div class="wiz-hdr"><div class="wiz-step on">1</div><div class="wiz-line"></div><div class="wiz-step">2</div><div class="wiz-line"></div><div class="wiz-step">3</div></div>
+    <div class="wiz-title">Who's training today?</div>
+    <div class="wiz-sub">Select a team to load their roster for attendance.</div>
+    <div id="teamlist"></div>
+    <div class="new-team-row" onclick="openNewTeam()"><i class="ti ti-plus" aria-hidden="true"></i> Create a new team</div>
+    <div class="wiz-footer"><button class="pri-btn" id="onb1next" onclick="goOnbDetails()" ${selectedTeamId?'':'disabled'}>Next: session details <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>`;
+  rTeamList();
+}
+function rTeamList(){
+  const tl=document.getElementById('teamlist');if(!tl)return;
+  tl.innerHTML=teams.map(team=>{
+    const isSel=team.id===selectedTeamId,isExp=expandedTeam===team.id;
+    const initials=team.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const body=isExp?`<div class="team-body">
+      ${team.players.map((p,i)=>`<div class="player-row"><span class="player-num">${i+1}</span><span class="player-name">${p.name}</span><button class="player-rm" onclick="removePlayer(${team.id},${p.id})"><i class="ti ti-x" aria-hidden="true"></i></button></div>`).join('')}
+      <div class="p-add-row"><input class="p-inp" id="p-inp-${team.id}" placeholder="Add player name" onkeydown="if(event.key==='Enter')addPlayer(${team.id})"><button class="p-add-btn" onclick="addPlayer(${team.id})"><i class="ti ti-plus" aria-hidden="true"></i></button></div>
+      <button class="ghost" style="color:var(--text-danger);margin-top:10px" onclick="confirmDeleteTeam(${team.id})"><i class="ti ti-trash" aria-hidden="true"></i> Delete team</button>
+    </div>`:'';
+    return`<div class="team-sel-card${isSel?' chosen':''}">
+      <div style="display:flex;align-items:center;gap:12px;flex:1;cursor:pointer" onclick="selectTeam(${team.id})">
+        <div class="team-avatar">${initials}</div>
+        <div style="flex:1"><div class="team-name">${team.name}</div><div class="team-sub">${team.division||'No division'} · ${team.players.length} players</div></div>
+        <div class="check-circle ${isSel?'on':''}">${isSel?'<i class="ti ti-check" aria-hidden="true"></i>':''}</div>
+      </div>
+      <button class="ico" style="margin-left:8px" onclick="event.stopPropagation();togTeamExp(${team.id})"><i class="ti ti-chevron-${isExp?'up':'down'}" aria-hidden="true"></i></button>
+    </div>${body}`;
+  }).join('');
+}
+function togTeamExp(id){expandedTeam=expandedTeam===id?null:id;rTeamList();}
+function selectTeam(id){
+  selectedTeamId=selectedTeamId===id?null:id;
+  persistTeams();rTeamList();
+  const b=document.getElementById('onb1next');
+  if(b){if(selectedTeamId)b.removeAttribute('disabled');else b.setAttribute('disabled','');}
+}
+function addPlayer(tid){const inp=document.getElementById(`p-inp-${tid}`);const name=(inp?.value||'').trim();if(!name)return;const team=teams.find(t=>t.id===tid);if(team){team.players.push({id:uid(),name});persistTeams();expandedTeam=tid;rTeamList();}inp.value='';}
+function removePlayer(tid,pid){const team=teams.find(t=>t.id===tid);if(team){team.players=team.players.filter(p=>p.id!==pid);persistTeams();rTeamList();}}
+function openNewTeam(){
+  openOv(`<div class="et">New team</div><div class="ef"><label class="el">Team name</label><input class="ei" id="nt-name" placeholder="e.g. U14 Girls"></div><div class="ef"><label class="el">Division / competition</label><input class="ei" id="nt-div" placeholder="e.g. EDJBA Templestowe"></div><div class="eacts"><button class="ecn" onclick="closeOv()">Cancel</button><button class="esv" onclick="saveNewTeam()">Create team</button></div>`);
+  setTimeout(()=>document.getElementById('nt-name')?.focus(),50);
+}
+function confirmDeleteTeam(tid){
+  const team=teams.find(t=>t.id===tid);if(!team)return;
+  openOv(`<div class="et">Delete ${team.name}?</div><div style="font-size:14px;color:var(--text-secondary)">This removes the team and its roster. Saved session history is not affected. This can't be undone.</div><div class="eacts"><button class="ecn" onclick="closeOv()">Cancel</button><button class="esv" style="background:var(--fill-danger,#dc2626)" onclick="deleteTeam(${tid})"><i class="ti ti-trash" aria-hidden="true"></i> Delete team</button></div>`);
+}
+function deleteTeam(tid){
+  teams=teams.filter(t=>t.id!==tid);
+  if(selectedTeamId===tid)selectedTeamId=null;
+  if(expandedTeam===tid)expandedTeam=null;
+  persistTeams();
+  closeOv();rTeamList();
+  const b=document.getElementById('onb1next');
+  if(b){if(selectedTeamId)b.removeAttribute('disabled');else b.setAttribute('disabled','');}
+}
+function saveNewTeam(){const name=document.getElementById('nt-name').value.trim();if(!name)return;const div=document.getElementById('nt-div').value.trim();const t={id:uid(),name,division:div,players:[]};teams.push(t);selectedTeamId=t.id;expandedTeam=t.id;persistTeams();closeOv();rTeamList();const b=document.getElementById('onb1next');if(b)b.removeAttribute('disabled');}
+function goOnbDetails(){if(!selectedTeamId)return;onbStep='details';render();}
+
+function rOnbDetails(){
+  const el=document.getElementById('vroot');
+  const team=teams.find(t=>t.id===selectedTeamId);
+  el.innerHTML=`
+    <div class="wiz-hdr"><div class="wiz-step done"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wiz-line"></div><div class="wiz-step on">2</div><div class="wiz-line"></div><div class="wiz-step">3</div></div>
+    <div class="wiz-title">Session details</div>
+    <div class="wiz-sub">Training ${team?team.name:''} · edit these any time later</div>
+    <div class="form-field"><span class="form-label">Session name</span><input class="form-inp" id="d-title" value="${ses.title}"></div>
+    <div class="form-field"><span class="form-label">Date</span><input class="form-inp" id="d-date" value="${ses.date}"></div>
+    <div class="form-field"><span class="form-label">Venue</span><input class="form-inp" id="d-venue" value="${ses.venue}"></div>
+    <div class="form-field"><span class="form-label">Target session length</span>
+      <div class="dur-big-ctrl"><button class="dbc-btn" onclick="adjTarget(-5)">−</button><input class="dbc-val" id="d-target" type="number" min="10" max="180" value="${ses.target}" onchange="setTargetDirect(this.value)" style="border:none;outline:none;width:100%"><button class="dbc-btn" onclick="adjTarget(5)">+</button></div>
+      <span style="font-size:11px;color:var(--text-muted)">Use the buttons for 5 min steps, or tap the number to type an exact time.</span>
+    </div>
+    <div class="wiz-footer"><button class="sec-btn" onclick="onbStep='team';render()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button><button class="pri-btn" onclick="goBuild()">Next: build session <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>`;
+}
+function adjTarget(d){ses.target=Math.max(10,Math.min(180,ses.target+d));const e=document.getElementById('d-target');if(e)e.value=ses.target;}
+function setTargetDirect(v){ses.target=Math.max(10,Math.min(180,parseInt(v)||60));const e=document.getElementById('d-target');if(e)e.value=ses.target;}
+function goBuild(){
+  ses.title=document.getElementById('d-title').value.trim()||ses.title;
+  ses.date=document.getElementById('d-date').value.trim()||ses.date;
+  ses.venue=document.getElementById('d-venue').value.trim()||ses.venue;
+  goScreen('build');
+}
+
+function rBuild(){
+  const el=document.getElementById('vroot');
+  const tot=totalMins(),diff=tot-ses.target;
+  const ouC=diff>0?'var(--text-danger)':'var(--text-success)';
+  const ouB=diff>0?'var(--bg-danger)':'var(--bg-success)';
+  const ouTxt=diff===0?'On target':diff<0?`${Math.abs(diff)} min under`:`${diff} min over`;
+  el.innerHTML=`
+    <div class="wiz-hdr"><div class="wiz-step done"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wiz-line"></div><div class="wiz-step done"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wiz-line"></div><div class="wiz-step on">3</div></div>
+    <div class="wiz-title">${ses.title}</div>
+    <div class="wiz-sub">${ses.venue} · ${ses.date} · target ${ses.target} min</div>
+    ${savedSessions.length?`<div class="import-row" onclick="openImport()"><i class="ti ti-download" aria-hidden="true"></i> Import a previous session as starting point</div>`:''}
+    <button class="top-add-btn" id="addbtn" onclick="togPick()"><i class="ti ti-plus" aria-hidden="true"></i> Add block</button>
+    <div id="pslot"></div>
+    <div class="ou-bar" style="background:${ouB};margin-top:4px"><div style="display:flex;align-items:center;gap:8px"><i class="ti ti-clock" style="color:${ouC}" aria-hidden="true"></i><span style="font-size:12px;font-weight:600;color:${ouC}">Total</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:${ouC}">${tot} min</span></div><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;background:${ouB};color:${ouC}">${ouTxt}</span></div>
+    <div id="blocklist">${rBlockList()}</div>
+    ${!ses.blocks.length?`<div style="padding:20px 16px;text-align:center;font-size:13px;color:var(--text-muted)">No blocks yet — tap "Add block" above to start building.</div>`:''}
+    <div class="wiz-footer"><button class="sec-btn" onclick="onbStep='details';goScreen('onboard')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button><button class="pri-btn" onclick="goScreen('run')" ${!ses.blocks.length?'disabled':''}><i class="ti ti-player-play" aria-hidden="true"></i> Start training</button></div>`;
+}
+function rBlockList(){
+  return ses.blocks.map((b,i)=>{const c=BC[b.cat];return`<div class="blk-card"><div class="bc-bar" style="background:${c.color}"></div><div class="bc-body"><div class="bc-top"><span class="bc-cat" style="background:${c.bg};color:${c.text}">${c.label}</span><span class="bc-dur">${b.dur} min</span></div><div class="bc-name">${b.name}</div>${b.notes?`<div class="bc-notes">${b.notes}</div>`:''}<div class="bc-acts">${i>0?`<button class="ico" onclick="mvB(${i},-1)"><i class="ti ti-chevron-up" aria-hidden="true"></i></button>`:'<span style="width:28px"></span>'}${i<ses.blocks.length-1?`<button class="ico" onclick="mvB(${i},1)"><i class="ti ti-chevron-down" aria-hidden="true"></i></button>`:'<span style="width:28px"></span>'}<button class="ico" onclick="openEdit(${b.id})"><i class="ti ti-edit" aria-hidden="true"></i></button><button class="ico" onclick="delB(${b.id})" style="margin-left:auto;color:var(--text-danger)"><i class="ti ti-trash" aria-hidden="true"></i></button></div></div></div>`;}).join('');
+}
+function mvB(i,d){const n=i+d;if(n<0||n>=ses.blocks.length)return;[ses.blocks[i],ses.blocks[n]]=[ses.blocks[n],ses.blocks[i]];rBuild();}
+function delB(id){ses.blocks=ses.blocks.filter(b=>b.id!==id);rBuild();}
+
+let currentPickerDrills=[];
+function getCatDrills(key){
+  const lib=(DC.find(c=>c.key===key)?.drills||[]).map(d=>({...d,source:'lib'}));
+  const mine=myDrills.map((d,i)=>({...d,myIdx:i})).filter(d=>d.cat===key).map(d=>({...d,source:'mine'}));
+  return [...lib,...mine];
+}
+function togPick(){pickerState=pickerState?null:'categories';rPslot();const b=document.getElementById('addbtn');if(b)b.style.display=pickerState?'none':'flex';}
+function rPslot(){
+  const s=document.getElementById('pslot');if(!s)return;
+  if(!pickerState){s.innerHTML='';return;}
+  if(pickerState==='categories'){
+    s.innerHTML=`<div class="picker"><div class="picker-hdr"><span class="ph-lbl">Category</span><button class="pcl" onclick="closePick()"><i class="ti ti-x" aria-hidden="true"></i></button></div>${Object.entries(BC).filter(([k])=>k!=='custom').map(([k,v])=>{const cnt=getCatDrills(k).length;return`<div class="cat-row" onclick="pickCat('${k}')"><div class="cdot" style="background:${v.color}"></div><span style="flex:1;font-size:14px;font-weight:500;color:var(--text-primary)">${v.label}</span><span style="font-size:12px;color:var(--text-muted)">${cnt}</span><i class="ti ti-chevron-right" style="font-size:14px;color:var(--text-muted)" aria-hidden="true"></i></div>`;}).join('')}<div class="cat-row" onclick="openEdit(null)"><div class="cdot" style="background:#9CA3AF"></div><span style="flex:1;font-size:14px;font-weight:500;color:var(--text-primary)">Custom block (one-off)</span><i class="ti ti-pencil" style="font-size:14px;color:var(--text-muted)" aria-hidden="true"></i></div></div>`;
+    return;
+  }
+  const cat=BC[pickerState];if(!cat)return;
+  currentPickerDrills=getCatDrills(pickerState);
+  s.innerHTML=`<div class="picker"><div class="picker-hdr"><button class="pbk" onclick="pickCat(null)"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button><span class="ph-lbl" style="margin-left:8px">${cat.label}</span><button class="pcl" onclick="closePick()"><i class="ti ti-x" aria-hidden="true"></i></button></div>${currentPickerDrills.map((d,i)=>`<div class="drill-row"><div style="flex:1"><div style="font-size:14px;font-weight:500;color:var(--text-primary);line-height:1.3">${d.name}${d.source==='mine'?' <span style="font-size:10px;font-weight:700;color:var(--text-accent);letter-spacing:.04em;text-transform:uppercase">· mine</span>':''}</div>${d.notes?`<div style="font-size:12px;color:var(--text-muted);margin-top:2px">${d.notes}</div>`:''}</div>${d.source==='mine'?`<button class="ico" onclick="openEditMyDrillFromPicker(${d.myIdx})" title="Edit"><i class="ti ti-edit" aria-hidden="true"></i></button>`:''}<button class="dadd" onclick="addFromPicker(${i})"><i class="ti ti-plus" aria-hidden="true"></i></button></div>`).join('')}
+  <div style="padding:10px 14px"><button class="ghost" style="width:100%;justify-content:center;border:1px dashed var(--border-strong);border-radius:8px;padding:8px" onclick="openNewMyDrillFor('${pickerState}')"><i class="ti ti-plus" aria-hidden="true"></i> Add a new ${cat.label.toLowerCase()} drill to your library</button></div>
+  </div>`;
+}
+function pickCat(k){pickerState=k||'categories';rPslot();}
+function closePick(){pickerState=null;const s=document.getElementById('pslot');if(s)s.innerHTML='';const b=document.getElementById('addbtn');if(b)b.style.display='flex';}
+function addFromPicker(i){
+  const d=currentPickerDrills[i];if(!d)return;
+  openEdit(null,{cat:pickerState,name:d.name,notes:d.notes,dur:d.dur||5});
+}
+function openEditMyDrillFromPicker(idx){ editingMyDrillIdx=idx; openMyDrillForm({...myDrills[idx]}); }
+function openNewMyDrillFor(catKey){ editingMyDrillIdx=null; openMyDrillForm({cat:catKey,name:'',dur:5,notes:''}); }
+
+function openDrillLibrary(){ rDrillLib(); }
+function rDrillLib(){
+  openOv(`<div class="et"><i class="ti ti-notebook" aria-hidden="true"></i> My drills</div>
+    <div style="font-size:13px;color:var(--text-muted)">Build your own reusable drills here — they'll appear in the drill library when you build a session.</div>
+    <div id="mydrills-list">${rMyDrillsList()}</div>
+    <button class="top-add-btn" style="margin:0;width:100%" onclick="openNewMyDrill()"><i class="ti ti-plus" aria-hidden="true"></i> Add a drill</button>
+    <div class="eacts"><button class="ecn" style="width:100%" onclick="closeOv()">Close</button></div>`);
+}
+function rMyDrillsList(){
+  if(!myDrills.length) return `<div style="padding:16px 0;text-align:center;font-size:13px;color:var(--text-muted)">No custom drills yet.</div>`;
+  return myDrills.map((d,i)=>{const c=BC[d.cat]||BC.custom;return`<div class="drill-row" style="border:.5px solid var(--border);border-radius:8px;margin-bottom:6px"><div style="flex:1"><span class="bc-cat" style="background:${c.bg};color:${c.text};font-size:10px">${c.label}</span><div style="font-size:14px;font-weight:500;color:var(--text-primary);margin-top:4px">${d.name}</div>${d.notes?`<div style="font-size:12px;color:var(--text-muted);margin-top:2px">${d.notes}</div>`:''}<div style="font-size:11px;color:var(--text-muted);margin-top:2px">Default ${d.dur} min</div></div><button class="ico" onclick="openEditMyDrill(${i})"><i class="ti ti-edit" aria-hidden="true"></i></button><button class="ico" style="color:var(--text-danger)" onclick="deleteMyDrill(${i})"><i class="ti ti-trash" aria-hidden="true"></i></button></div>`;}).join('');
+}
+let editingMyDrillIdx=null,myDrillReturnTo='library';
+function openNewMyDrill(){ editingMyDrillIdx=null; myDrillReturnTo='library'; openMyDrillForm({cat:'offence',name:'',dur:5,notes:''}); }
+function openEditMyDrill(i){ editingMyDrillIdx=i; myDrillReturnTo='library'; openMyDrillForm({...myDrills[i]}); }
+function openEditMyDrillFromPicker(idx){ editingMyDrillIdx=idx; myDrillReturnTo='picker'; openMyDrillForm({...myDrills[idx]}); }
+function openNewMyDrillFor(catKey){ editingMyDrillIdx=null; myDrillReturnTo='picker'; openMyDrillForm({cat:catKey,name:'',dur:5,notes:''}); }
+function myDrillFormCancel(){ if(myDrillReturnTo==='library') rDrillLib(); else { closeOv(); rPslot(); } }
+function openMyDrillForm(d){
+  openOv(`<div class="et">${editingMyDrillIdx===null?'New drill':'Edit drill'}</div>
+    <div class="ef"><label class="el">Name</label><input class="ei" id="md-name" value="${d.name}" placeholder="Drill name"></div>
+    <div class="ef"><label class="el">Category</label><div class="cgrid">${Object.entries(BC).map(([k,v])=>`<div class="copt${d.cat===k?' sel':''}" onclick="mdCat('${k}')" id="mdco${k}">${v.label}</div>`).join('')}</div></div>
+    <div class="ef"><label class="el">Default duration (minutes)</label><input class="ei" type="number" id="md-dur" value="${d.dur}" min="1" max="60" style="width:110px"></div>
+    <div class="ef"><label class="el">Notes</label><textarea class="eta" id="md-notes" placeholder="Setup, coaching points, anything to remember">${d.notes||''}</textarea></div>
+    <div class="eacts"><button class="ecn" onclick="myDrillFormCancel()">Cancel</button><button class="esv" onclick="saveMyDrill()">Save drill</button></div>`);
+  editingMyDrillCat=d.cat;
+  setTimeout(()=>document.getElementById('md-name')?.focus(),50);
+}
+let editingMyDrillCat='offence';
+function mdCat(k){editingMyDrillCat=k;document.querySelectorAll('.copt').forEach(e=>e.classList.remove('sel'));document.getElementById('mdco'+k)?.classList.add('sel');}
+function saveMyDrill(){
+  const name=document.getElementById('md-name').value.trim();if(!name)return;
+  const d={cat:editingMyDrillCat,name,dur:Math.max(1,parseInt(document.getElementById('md-dur').value)||5),notes:document.getElementById('md-notes').value.trim()};
+  if(editingMyDrillIdx!==null) myDrills[editingMyDrillIdx]=d; else myDrills.push(d);
+  persistDrills();
+  if(myDrillReturnTo==='library') rDrillLib(); else { closeOv(); rPslot(); }
+}
+function deleteMyDrill(i){ myDrills.splice(i,1); persistDrills(); rDrillLib(); }
+function openEdit(id,preset){
+  const b=id?ses.blocks.find(b=>b.id===id):(preset?{id:null,...preset}:{id:null,cat:'offence',name:'',dur:5,notes:''});
+  editBlk={...b};
+  openOv(`<div class="et">${id?'Edit block':'Add block'}</div><div class="ef"><label class="el">Name</label><input class="ei" id="bn" value="${b.name}" placeholder="Drill name"></div><div class="ef"><label class="el">Category</label><div class="cgrid">${Object.entries(BC).map(([k,v])=>`<div class="copt${b.cat===k?' sel':''}" onclick="sCat('${k}')" id="co${k}">${v.label}</div>`).join('')}</div></div><div class="ef"><label class="el">Duration (minutes)</label><input class="ei" type="number" id="bd" value="${b.dur}" min="1" max="60" style="width:110px"></div><div class="ef"><label class="el">Notes</label><textarea class="eta" id="bno" placeholder="Setup, coaching points, anything to remember">${b.notes||''}</textarea></div><div class="eacts"><button class="ecn" onclick="closeOv()">Cancel</button><button class="esv" onclick="saveBlk()">${id?'Save':'Add to session'}</button></div>`);
+  setTimeout(()=>document.getElementById('bn')?.focus(),50);
+}
+function sCat(k){editBlk.cat=k;document.querySelectorAll('.copt').forEach(e=>e.classList.remove('sel'));document.getElementById('co'+k)?.classList.add('sel');}
+function saveBlk(){
+  const name=document.getElementById('bn').value.trim();if(!name)return;
+  const b={...editBlk,name,dur:Math.max(1,parseInt(document.getElementById('bd').value)||5),notes:document.getElementById('bno').value.trim()};
+  if(b.id){const i=ses.blocks.findIndex(x=>x.id===b.id);if(i>=0)ses.blocks[i]=b;}else{b.id=uid();ses.blocks.push(b);}
+  closeOv();closePick();rBuild();
+}
+function openImport(){
+  openOv(`<div class="et">Import previous session</div><div class="ef"><label class="el">Choose a saved session</label></div>${savedSessions.map((s,i)=>`<div class="hist-card" style="margin:0" onclick="doImport(${i})"><div class="hist-title">${s.name}</div><div class="hist-meta">${s.savedAt} · ${s.blocks.length} drills</div></div>`).join('')}<div class="eacts"><button class="ecn" style="width:100%" onclick="closeOv()">Cancel</button></div>`);
+}
+function doImport(i){ses.blocks=savedSessions[i].blocks.map(b=>({...b,id:uid()}));closeOv();rBuild();}
+
+let tIdx=0,tSecs=0,tRunning=false,tDone=false,tInt=null,sessionStarted=false,sessionElapsed=0,completedDurs=0,drillDone=false;
+function tick(){if(!sessionStarted)return;sessionElapsed++;if(tRunning&&tSecs>0){tSecs--;if(tSecs===0){drillDone=true;tRunning=false;}}if(screen==='run')rRun();}
+function startInt(){clearInterval(tInt);tInt=setInterval(tick,1000);}
+function startAt(i){clearInterval(tInt);completedDurs=ses.blocks.slice(0,i).reduce((s,b)=>s+b.dur*60,0);sessionElapsed=0;tIdx=i;tSecs=ses.blocks[i].dur*60;drillDone=false;tRunning=true;sessionStarted=true;tDone=false;startInt();rRun();}
+function tPause(){if(drillDone)return;tRunning=!tRunning;rRun();}
+function tRestart(){tSecs=ses.blocks[tIdx].dur*60;drillDone=false;tRunning=true;if(!tInt)startInt();rRun();}
+function tNext(){if(tIdx<ses.blocks.length-1){completedDurs+=ses.blocks[tIdx].dur*60;tIdx++;tSecs=ses.blocks[tIdx].dur*60;drillDone=false;tRunning=true;if(!tInt)startInt();}else{clearInterval(tInt);tInt=null;tRunning=false;tDone=true;}rRun();}
+function tPrev(){if(tIdx>0){tIdx--;completedDurs=ses.blocks.slice(0,tIdx).reduce((s,b)=>s+b.dur*60,0);tSecs=ses.blocks[tIdx].dur*60;drillDone=false;tRunning=true;if(!tInt)startInt();rRun();}}
+function endSession(){clearInterval(tInt);tInt=null;tRunning=false;sessionStarted=false;openSaveDlg();}
+function tResetAll(){clearInterval(tInt);tInt=null;tRunning=false;sessionStarted=false;tIdx=0;tSecs=0;sessionElapsed=0;completedDurs=0;drillDone=false;tDone=false;
+  ses={title:'Session #5',date:ses.date,venue:ses.venue,target:60,blocks:[]};onbStep='team';goScreen('onboard');}
+
+function rRun(){
+  const el=document.getElementById('vroot');
+  if(tDone){const over=sessionElapsed-totalMins()*60;el.innerHTML=`<div style="padding:40px 16px;text-align:center"><div style="font-size:48px">🏀</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:800;margin:12px 0 6px">Session complete!</div><div style="font-size:14px;color:var(--text-muted);margin-bottom:4px">${fmt(sessionElapsed)} on court · ${totalMins()} min planned</div><div style="font-size:15px;font-weight:700;margin-bottom:24px;color:${Math.abs(over)<5?'var(--text-muted)':over>0?'var(--text-danger)':'var(--text-success)'}">${Math.abs(over)<5?'Right on time':over>0?`+${fmt(over)} over`:`${fmt(Math.abs(over))} under`}</div><div style="display:flex;flex-direction:column;gap:8px;padding:0 16px"><button class="pri-btn" onclick="endSession()"><i class="ti ti-device-floppy" aria-hidden="true"></i> Save session</button></div></div>`;return;}
+  if(!sessionStarted&&sessionElapsed===0){el.innerHTML=`<div style="padding:24px 16px;display:flex;flex-direction:column;gap:16px"><div class="sh" style="padding:0"><span class="st">Session overview</span></div><div class="pvlist">${ses.blocks.map(b=>{const c=BC[b.cat];return`<div class="pvrow"><div class="pvdot" style="background:${c.color}"></div><span style="flex:1;font-size:13px;color:var(--text-secondary)">${b.name}</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--text-muted)">${b.dur}m</span></div>`;}).join('')}</div><button style="padding:16px;border:none;background:var(--fill-accent);color:var(--on-accent);font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;border-radius:10px;cursor:pointer" onclick="startAt(0)"><i class="ti ti-player-play" aria-hidden="true"></i> Start session – ${totalMins()} min</button></div>`;return;}
+  const b=ses.blocks[tIdx],c=BC[b.cat],nb=ses.blocks[tIdx+1];
+  const isLow=tSecs<=30&&tSecs>0;
+  const tColor=drillDone?'var(--text-success)':isLow?'var(--text-danger)':'var(--text-primary)';
+  const plEl=completedDurs+(b.dur*60-tSecs),delta=sessionElapsed-plEl,absDelta=Math.abs(delta);
+  const dColor=delta>10?'var(--text-danger)':delta<-10?'var(--text-success)':'var(--text-muted)';
+  el.innerHTML=`<div class="run-wrap"><div class="run-prog">${ses.blocks.map((_,i)=>`<div class="rseg${i<tIdx?' done':i===tIdx?' cur':''}"></div>`).join('')}</div><div style="font-size:11px;color:var(--text-muted);text-align:center">Block ${tIdx+1} of ${ses.blocks.length}</div>
+    <div class="rblock"><div class="rbhdr" style="background:${c.bg}"><span class="bc-cat" style="background:${c.bg};color:${c.text};font-size:12px">${c.label}</span><span style="font-size:12px;color:${c.text};font-weight:600">${b.dur} min planned</span></div><div class="rtimer" style="color:${tColor}">${fmt(tSecs)}</div><div class="rname">${b.name}</div>${b.notes?`<div class="rnotes">${b.notes}</div>`:''}</div>
+    ${drillDone?`<div class="banner" style="background:var(--bg-success);border:.5px solid var(--border-success)"><span style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--text-success)"><i class="ti ti-check" aria-hidden="true"></i> Drill done — tap Next to continue</span></div>`:''}
+    ${!tRunning&&!drillDone&&sessionStarted?`<div class="banner" style="background:var(--surface-1);border:.5px solid var(--border)"><span style="font-size:13px;font-weight:600;color:var(--text-muted)"><i class="ti ti-player-pause" aria-hidden="true"></i> Drill paused — session clock still running</span></div>`:''}
+    <div class="rcontrols">
+      <button class="rcbtn" onclick="tPrev()" ${tIdx===0?'style="opacity:.3;cursor:default"':''}><i class="ti ti-player-track-prev" aria-hidden="true"></i></button>
+      <button class="rcbtn" onclick="tRestart()" title="Restart drill"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+      <button class="rcbtn lg ${drillDone?'':'accent'}" onclick="tPause()" ${drillDone?'style="opacity:.3;cursor:default"':''}><i class="ti ${tRunning?'ti-player-pause':'ti-player-play'}" aria-hidden="true"></i></button>
+      <button class="rcbtn lg ${drillDone?'accent':''}" onclick="tNext()"><i class="ti ti-player-track-next" aria-hidden="true"></i></button>
+    </div>
+    <div class="clocks-card"><div class="ccol"><div class="clock-lbl"><i class="ti ti-clock" style="font-size:11px" aria-hidden="true"></i> Court time</div><div class="clock-val" style="color:var(--text-primary)">${fmt(sessionElapsed)}</div><div class="clock-sub" style="color:var(--text-muted)">of ${fmt(totalMins()*60)} planned</div></div><div class="ccol"><div class="clock-lbl"><i class="ti ti-trending-${delta>10?'up':delta<-10?'down':'right'}" style="font-size:11px" aria-hidden="true"></i> Delta</div><div class="clock-val" style="color:${dColor}">${delta===0?'—':`${delta>0?'+':'−'}${fmt(absDelta)}`}</div><div class="clock-sub" style="color:${dColor}">${delta>10?'over':delta<-10?'ahead':'on time'}</div></div></div>
+    ${nb?`<div class="rnext-card"><span style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);min-width:46px">Up next</span><div class="pvdot" style="background:${BC[nb.cat].color};width:7px;height:7px;border-radius:50%"></div><span style="font-size:13px;font-weight:500;color:var(--text-secondary);flex:1">${nb.name}</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--text-muted)">${nb.dur} min</span></div>`:`<div class="rnext-card" style="justify-content:center"><span style="font-size:12px;font-weight:600;color:var(--text-success)"><i class="ti ti-check" aria-hidden="true"></i> Final drill</span></div>`}
+    <button style="width:100%;padding:9px;background:none;border:.5px solid var(--border-danger);border-radius:8px;color:var(--text-danger);font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px" onclick="endSession()"><i class="ti ti-device-floppy" aria-hidden="true"></i> End & save session</button>
+  </div>`;
+}
+
+function openSaveDlg(){
+  const team=teams.find(t=>t.id===selectedTeamId);
+  savePresence={};saveExtras={present:[],absent:[]};
+  if(team)team.players.forEach(p=>{savePresence[p.id]='present';});
+  renderSaveDlg();
+}
+function renderSaveDlg(){
+  const team=teams.find(t=>t.id===selectedTeamId);
+  const teamSection=team?`<div class="ef"><label class="el"><i class="ti ti-users" style="font-size:12px" aria-hidden="true"></i> Attendance — ${team.name}</label><div style="font-size:12px;color:var(--text-muted);margin-bottom:4px">Tap to toggle present / absent</div><div class="att-grid">${team.players.map(p=>{const st=savePresence[p.id]||'present';return`<div class="att-chip ${st}" onclick="togPresence(${p.id})"><i class="ti ${st==='present'?'ti-circle-check':'ti-circle-x'}" aria-hidden="true"></i><span class="att-name">${p.name}</span></div>`;}).join('')}</div></div>`:'';
+  document.getElementById('ep').innerHTML=`<div class="et"><i class="ti ti-device-floppy" aria-hidden="true"></i> Save session</div><div class="ef"><label class="el">Session name</label><input class="ei" id="sv-name" value="${ses.title} – ${ses.date}"></div>${teamSection}<div class="ef"><label class="el">Notes</label><textarea class="eta" id="sv-notes" placeholder="How did it go? What to work on next time?"></textarea></div><div style="font-size:12px;color:var(--text-muted);text-align:center">Session ran for ${fmt(sessionElapsed)} · ${ses.blocks.length} drills</div><div class="eacts"><button class="ecn" onclick="closeOv();tResetAll()">Skip</button><button class="esv" onclick="doSave()"><i class="ti ti-device-floppy" aria-hidden="true"></i> Save session</button></div>`;
+  document.getElementById('ov').style.display='flex';
+}
+function togPresence(pid){savePresence[pid]=savePresence[pid]==='present'?'absent':'present';renderSaveDlg();}
+function doSave(){
+  const team=teams.find(t=>t.id===selectedTeamId);
+  const present=team?team.players.filter(p=>savePresence[p.id]==='present').map(p=>p.name):[];
+  const absent=team?team.players.filter(p=>savePresence[p.id]==='absent').map(p=>p.name):[];
+  const record={id:uid(),name:(document.getElementById('sv-name')?.value||ses.title).trim(),date:ses.date,venue:ses.venue,teamName:team?.name||null,savedAt:new Date().toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}),actualSecs:sessionElapsed,plannedSecs:totalMins()*60,present,absent,notes:document.getElementById('sv-notes')?.value||'',blocks:ses.blocks.map(b=>({...b}))};
+  savedSessions.unshift(record);persistSessions();closeOv();tResetAll();
+}
+
+function rHist(){
+  const el=document.getElementById('vroot');
+  if(!savedSessions.length){el.innerHTML=`<div style="padding:48px 16px;text-align:center"><i class="ti ti-history" style="font-size:36px;color:var(--text-muted)" aria-hidden="true"></i><div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;margin:12px 0 6px">No saved sessions yet</div><div style="font-size:14px;color:var(--text-muted)">Run and save a session to see it here.</div></div>`;return;}
+  el.innerHTML=`<div class="sh"><span class="st">${savedSessions.length} saved session${savedSessions.length!==1?'s':''}</span></div>`+
+    savedSessions.map((s,i)=>{
+      const over=s.actualSecs-s.plannedSecs;
+      const dC=over>10?'var(--text-danger)':over<-10?'var(--text-success)':'var(--text-muted)';
+      const dT=Math.abs(over)<5?'On time':over>0?`+${fmt(over)} over`:`${fmt(Math.abs(over))} under`;
+      const exp=expandedHist===s.id;
+      return`<div class="hist-card" onclick="togHist(${s.id})">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between">
+          <div><div class="hist-title">${s.name}</div><div class="hist-meta">${s.savedAt}${s.teamName?' · '+s.teamName:''} · ${fmt(s.actualSecs)}</div></div>
+          <div style="text-align:right;flex-shrink:0;margin-left:10px"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:${dC}">${dT}</div>${s.present.length?`<div style="font-size:11px;color:var(--text-muted);margin-top:2px">${s.present.length} present${s.absent.length?` · ${s.absent.length} absent`:''}</div>`:''}</div>
+        </div>
+        ${exp?`<div class="hist-detail">
+          ${s.present.length?`<div class="dr"><span style="color:var(--text-muted)">Present</span><span style="text-align:right">${s.present.join(', ')}</span></div>`:''}
+          ${s.absent.length?`<div class="dr"><span style="color:var(--text-muted)">Absent</span><span style="text-align:right">${s.absent.join(', ')}</span></div>`:''}
+          ${s.notes?`<div class="dr"><span style="color:var(--text-muted)">Notes</span><span style="text-align:right;font-size:12px;max-width:65%">${s.notes}</span></div>`:''}
+          <div style="margin-top:10px">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px">Drills (${s.blocks.length})</div>
+            ${s.blocks.map(b=>{const c=BC[b.cat]||BC.custom;return`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:.5px solid var(--border)"><div class="pvdot" style="background:${c.color}"></div><span style="flex:1;font-size:13px;color:var(--text-secondary)">${b.name}</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--text-muted)">${b.dur}m</span></div>`;}).join('')}
+          </div>
+          <button style="width:100%;margin-top:10px;padding:8px;background:var(--fill-accent);color:var(--on-accent);border:none;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer" onclick="event.stopPropagation();loadSes(${i})"><i class="ti ti-refresh" aria-hidden="true"></i> Use as new session</button>
+        </div>`:''}
+      </div>`;
+    }).join('')+`<div class="wiz-footer"><button class="sec-btn" onclick="goScreen('onboard')" style="flex:1"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to home</button></div>`;
+}
+function togHist(id){expandedHist=expandedHist===id?null:id;rHist();}
+function loadSes(i){ses.blocks=savedSessions[i].blocks.map(b=>({...b,id:uid()}));goScreen('build');}
+
+function openOv(h){document.getElementById('ep').innerHTML=h;document.getElementById('ov').style.display='flex';}
+function closeOv(){document.getElementById('ov').style.display='none';editBlk=null;}
+document.getElementById('ov').addEventListener('click',function(e){if(e.target===this)closeOv();});
+
+loadData();render();
+</script>
+
+</body>
+</html>
